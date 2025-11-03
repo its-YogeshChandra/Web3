@@ -5,6 +5,12 @@ import { Copy } from "lucide-react";
 import { useState } from "react";
 import { walletServices } from "@/services/createWallet";
 import { useRouter } from "next/navigation";
+import { useForm, Controller } from "react-hook-form";
+import { SubmitHandler } from "react-hook-form";
+interface Inputs {
+  password: string;
+  confirmPassword: string;
+}
 export default function SeedPhrase() {
   const seedArr = [
     "title",
@@ -25,13 +31,24 @@ export default function SeedPhrase() {
   const [isMnemonicPhrase, setIsMnemonicPhrase] = useState(false);
   const [isPrivateKey, setIsPrivateKey] = useState(false);
   const [onPhasePassword, setonPhasePassword] = useState(false);
- const router = useRouter();
 
+  const router = useRouter();
+
+  //extract nessecary elements from the useform
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log(data);
+  };
   const createAccount = () => {
     const mnemonicPhrase = walletServices.createMnemonicAddress();
     setMnemonicPhrase(mnemonicPhrase);
   };
- 
+
   //copy the string to the clipboard
   const copytoClipBoard = (value: string[]) => {
     //convert the value into string
@@ -69,9 +86,30 @@ export default function SeedPhrase() {
       >
         CreateAccount
       </Button>
-   {
-    onPhasePassword == true
-   }
+      {onPhasePassword == false ? (
+        <div className="w-[350px] h-max bg-purple-500 ">
+          <form onSubmit={handleSubmit(onSubmit) 
+          }
+          className="p-2"
+          >
+            <p>New Password</p>
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => <Input {...field} />}
+            />
+            <p className="mt-3">Confirm Password</p>
+            <Controller
+              name="confirmPassword"
+              control={control}
+              render={({ field }) => <Input {...field} />}
+            />
+            <Button type="submit" className="mt-2 w-full">
+              Proceed
+            </Button>
+          </form>
+        </div>
+      ) : null}
       {iscreateAccount == true ? (
         <div className="w-max h-max flex flex-col ">
           <div className="w-3xl h-[450px] bg-[#385170] grid grid-cols-3  place-items-center border rounded-3xl">
