@@ -8,7 +8,7 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { CirclePlus } from 'lucide-react';
 
-
+// bg-[#051715]
 export default function () {
   const [sideBarOpen, setSidebarOpen] = useState(false);
   const setSideBarState = () => {
@@ -45,9 +45,10 @@ export default function () {
         <p className="text-6xl">100</p>
         <p className="text-4xl">SOL</p>
       </div>
-      <div className="w-xl h-max p-1 flex justify-center">
+      <div className="w-xl h-max p-1 flex justify-center gap-x-2">
         <Button>Send</Button>
         <Button>Receive</Button>
+        <Button>Airdrop Sol</Button>
       </div>
       <div className="w-xl h-max bg-red-300 p-4 flex gap-x-6 ">
         <Image src={solanapng} alt="" className="w-8 h-8" />
