@@ -24,13 +24,15 @@ export default function SeedPhrase() {
   const [iscreateAccount, setIsCreateAccount] = useState(false);
   const [isMnemonicPhrase, setIsMnemonicPhrase] = useState(false);
   const [isPrivateKey, setIsPrivateKey] = useState(false);
+  const [onPhasePassword, setonPhasePassword] = useState(false);
  const router = useRouter();
 
   const createAccount = () => {
     const mnemonicPhrase = walletServices.createMnemonicAddress();
     setMnemonicPhrase(mnemonicPhrase);
   };
-
+ 
+  //copy the string to the clipboard
   const copytoClipBoard = (value: string[]) => {
     //convert the value into string
     const data: string = value.join(" ");
@@ -67,7 +69,9 @@ export default function SeedPhrase() {
       >
         CreateAccount
       </Button>
-
+   {
+    onPhasePassword == true
+   }
       {iscreateAccount == true ? (
         <div className="w-max h-max flex flex-col ">
           <div className="w-3xl h-[450px] bg-[#385170] grid grid-cols-3  place-items-center border rounded-3xl">
