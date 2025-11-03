@@ -2,15 +2,14 @@ import { PublicKey, Keypair } from "@solana/web3.js";
 import * as bip39 from "@scure/bip39";
 import { wordlist } from "@scure/bip39/wordlists/english.js";
 import { base58 } from "@scure/base";
-import { getSystemErrorMap } from "util";
 
 export class walletFunction {
   constructor() {}
 
   createMnemonicAddress() {
-    const mn = bip39.generateMnemonic(wordlist);
-    console.log(mn);
-    return mn;
+    const mn = bip39.generateMnemonic(wordlist, 128);
+    const mphrase = mn.split(" ")
+    return mphrase;
   }
 
   private async createSeedPhrase(mphrase: string) {
