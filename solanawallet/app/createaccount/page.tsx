@@ -7,9 +7,9 @@ import { walletServices } from "@/services/createWallet";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form";
+import { on } from "events";
 interface Inputs {
   password: string;
-  confirmPassword: string;
 }
 export default function SeedPhrase() {
   const seedArr = [
@@ -41,9 +41,14 @@ export default function SeedPhrase() {
     formState: { errors },
   } = useForm<Inputs>();
 
+  let passwordData = { password: "" };
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
+    passwordData.password = data.password;
+    setonPhasePassword((prev) => !prev);
+    setIsCreateAccount((prev) => !prev);
   };
+
   const createAccount = () => {
     const mnemonicPhrase = walletServices.createMnemonicAddress();
     setMnemonicPhrase(mnemonicPhrase);
@@ -61,7 +66,8 @@ export default function SeedPhrase() {
       .then((copiedText) => {
         if (copiedText == data) {
           alert("mnemonic successfully copied");
-          //navigate to the dashboard
+                
+          //navigate to the dashboard 
           router.push("/dashboard");
         }
         // You can then use 'copiedText' as needed, e.g., display it in an element.
@@ -73,8 +79,9 @@ export default function SeedPhrase() {
 
   //function to setcreate account status
   const setcreateAccountStatus = () => {
-    setIsCreateAccount((prev) => !prev);
+    setonPhasePassword((prev) => !prev);
   };
+
   return (
     <div className="bg-[#051715] w-screen h-screen flex flex-col gap-y-3 items-center justify-center">
       <Button
@@ -86,21 +93,12 @@ export default function SeedPhrase() {
       >
         CreateAccount
       </Button>
-      {onPhasePassword == false ? (
+      {onPhasePassword == true ? (
         <div className="w-[350px] h-max bg-purple-500 ">
-          <form onSubmit={handleSubmit(onSubmit) 
-          }
-          className="p-2"
-          >
+          <form onSubmit={handleSubmit(onSubmit)} className="p-2">
             <p>New Password</p>
             <Controller
               name="password"
-              control={control}
-              render={({ field }) => <Input {...field} />}
-            />
-            <p className="mt-3">Confirm Password</p>
-            <Controller
-              name="confirmPassword"
               control={control}
               render={({ field }) => <Input {...field} />}
             />
