@@ -5,9 +5,12 @@ import { base58 } from "@scure/base";
 import { pbkdf2 } from "crypto";
 
 export class walletFunction {
-  constructor() {
-
- }
+  private walletUrl;
+  private connection;
+  constructor(walletUrl: string) {
+    this.walletUrl = walletUrl;
+    this.connection = new Connection(this.walletUrl);
+  }
 
   createMnemonicAddress() {
     const mn = bip39.generateMnemonic(wordlist, 128);
@@ -29,9 +32,9 @@ export class walletFunction {
     return { privateKey, publicKey };
   }
 
- async generatePublickeyfromPrivatekey() {
-    //bring the decryption function 
-    const  data = await this.decryptData()
+  async generatePublickeyfromPrivatekey() {
+    //bring the decryption function
+    const data = await this.decryptData();
     const keyPair = Keypair.fromSecretKey(data);
     const publicKey = keyPair.publicKey.toBase58();
     return publicKey;
@@ -56,9 +59,7 @@ export class walletFunction {
     // console.log(JSON.stringify(accountInfo, null, 2));
   }
 
-  async airdropSol(){
-  
-  }
+  async airdropSol() {}
 
   //function to derive encryption key , an implemenation of the symmetric encryption
   private async deriveencryptionKey(password: string, salt: Uint8Array) {
@@ -97,7 +98,7 @@ export class walletFunction {
   async encryptData(mphrase: string, password: string) {
     //create the seed from the mphrase
     const seedPhrase = await this.createSeedPhrase(mphrase);
-    const keyPair = Keypair.fromSeed(seedPhrase.subarray(0,32));
+    const keyPair = Keypair.fromSeed(seedPhrase.subarray(0, 32));
 
     //encryption mechanism
     const salt = crypto.getRandomValues(new Uint8Array(16));
@@ -162,6 +163,9 @@ export class walletFunction {
   }
 }
 
-const walletServices = new walletFunction();
+const walletServices = new walletFunction(
+  process.env.NEXT_PUBLIC_DEVNET_URL ||
+    "https://solana-devnet.g.alchemy.com/v2/E4GYCRN489SZHhZeEHdSE"
+);
 
 export { walletServices };
