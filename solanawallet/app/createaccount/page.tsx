@@ -44,8 +44,10 @@ export default function SeedPhrase() {
 
   let passwordData = { password: "" };
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
     passwordData.password = data.password;
+
+    //set in localStorage for testing purpose
+    localStorage.setItem("password", data.password);
     setonPhasePassword((prev) => !prev);
     setIsCreateAccount((prev) => !prev);
   };
@@ -56,26 +58,36 @@ export default function SeedPhrase() {
   };
 
   //copy the string to the clipboard
-  const copytoClipBoard = (value: string[]) => {
-    //convert the value into string
-    const data: string = value.join(" ");
-    navigator.clipboard.writeText(data);
+  const copytoClipBoard = async (value: string[]) => {
+    //fetch the data form the storage
+    const password = localStorage.getItem("password") || "";
 
-    //check if data get successfully copied or not
-    navigator.clipboard
-      .readText()
-      .then((copiedText) => {
-        if (copiedText == data) {
-          alert("mnemonic successfully copied");
-                
-          //navigate to the dashboard 
-          router.push("/dashboard");
-        }
-        // You can then use 'copiedText' as needed, e.g., display it in an element.
-      })
-      .catch((err) => {
-        console.error("Failed to read clipboard contents: ", err);
-      });
+    const values = await walletServices.encryptData(
+      mnemonicPhrase.join(" "),
+      password
+    );
+
+    if (values == "success") {
+      //convert the value into string
+      const data: string = value.join(" ");
+      navigator.clipboard.writeText(data);
+
+      //check if data get successfully copied or not
+      navigator.clipboard
+        .readText()
+        .then((copiedText) => {
+          if (copiedText == data) {
+            alert("mnemonic successfully copied");
+
+            //navigate to the dashboard
+            router.push("/dashboard");
+          }
+          // You can then use 'copiedText' as needed, e.g., display it in an element.
+        })
+        .catch((err) => {
+          console.error("Failed to read clipboard contents: ", err);
+        });
+    }
   };
 
   //function to setcreate account status
