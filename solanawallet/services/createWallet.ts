@@ -69,7 +69,7 @@ export class walletFunction {
       false,
       ["deriveKey"]
     );
-    return window.crypto.subtle.deriveKey(
+    const deriveKey = window.crypto.subtle.deriveKey(
       {
         name: "PBKDF2",
         iterations: 25000,
@@ -80,6 +80,9 @@ export class walletFunction {
       false,
       ["encrypt", "decrypt"]
     );
+
+    //return the value
+    return deriveKey;
   }
 
   // function to encrypt the private key
@@ -87,8 +90,9 @@ export class walletFunction {
     //create the seed from the mphrase
     const seedPhrase = await this.createSeedPhrase(mphrase);
     const keyPair = Keypair.fromSeed(seedPhrase);
-   //add the value to the local variable
-    values.password = password;
+
+    //save the key in storage
+    localStorage.setItem("password", password);
 
     //encryption mechanism
     const salt = crypto.getRandomValues(new Uint8Array(16));
@@ -110,10 +114,7 @@ export class walletFunction {
     };
 
     //save the data in the storage
-    localStorage.setItem(
-      "solana_encrypted_key",
-      JSON.stringify(encryptedObj)
-    );
+    localStorage.setItem("solana_encrypted_key", JSON.stringify(encryptedObj));
 
     if (localStorage.geItem("solana_encrypted_key") !== "") {
       //add send the success message
@@ -122,12 +123,38 @@ export class walletFunction {
   }
 
   //function to decrypt data
-  async decryptData(){
+  async decryptData() {
     //bring the obj from the localstorage
-     const {cipher, salt, iv} = JSON.parse(localStorage.getItem('solana_encrypted_key')|| "gibershmarco");
-     
-     //add 
+    const { cipher, salt, iv } = JSON.parse(
+      localStorage.getItem("solana_encrypted_key") || "gibershmarco"
+    );
 
+    // Convert stored arrays back into Uint8Arrays
+    const cipherArray = new Uint8Array(cipher);
+    const saltArray = new Uint8Array(salt);
+    const ivArray = new Uint8Array(iv);
+
+    //fetch the password from the storage
+    const password =
+      localStorage.getItem("password") ||
+      "9b8f4aee10baf3ef84e2973cf03d5851e24467352b519e0c9db174c69e0a7cc8";
+
+    //create the derive key using the password
+    const derivedKey = await this.deriveencryptionKey(password);
+
+    //decrypt the daata using the derived key
+    const decryptedBuffer = await crypto.subtle.decrypt(
+      {
+        name: "AES-GCM",
+        iv: ivArray,
+      },
+      derivedKey,
+      cipherArray
+    );
+
+    //conver the buffer into the true usable form
+    const privateKey = new Uint8Array(decryptedBuffer);
+    return privateKey;
   }
 }
 
