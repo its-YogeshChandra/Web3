@@ -7,7 +7,8 @@ import { walletServices } from "@/services/createWallet";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form";
-import { on } from "events";
+
+//type for password form
 interface Inputs {
   password: string;
 }
