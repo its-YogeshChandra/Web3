@@ -5,7 +5,9 @@ import { base58 } from "@scure/base";
 import { pbkdf2 } from "crypto";
 
 export class walletFunction {
-  constructor() {}
+  constructor() {
+
+ }
 
   createMnemonicAddress() {
     const mn = bip39.generateMnemonic(wordlist, 128);
@@ -27,9 +29,10 @@ export class walletFunction {
     return { privateKey, publicKey };
   }
 
-  generatePublickeyfromPrivatekey(privatekey: string) {
-    const secretKeyBytes = base58.decode(privatekey);
-    const keyPair = Keypair.fromSecretKey(secretKeyBytes);
+ async generatePublickeyfromPrivatekey() {
+    //bring the decryption function 
+    const  data = await this.decryptData()
+    const keyPair = Keypair.fromSecretKey(data);
     const publicKey = keyPair.publicKey.toBase58();
     return publicKey;
   }
@@ -51,6 +54,10 @@ export class walletFunction {
 
     // const accountInfo = await connection.getAccountInfo();
     // console.log(JSON.stringify(accountInfo, null, 2));
+  }
+
+  async airdropSol(){
+  
   }
 
   //function to derive encryption key , an implemenation of the symmetric encryption
