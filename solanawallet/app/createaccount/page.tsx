@@ -11,6 +11,7 @@ import { SubmitHandler } from "react-hook-form";
 //type for password form
 interface Inputs {
   password: string;
+
 }
 export default function SeedPhrase() {
   const seedArr = [
@@ -33,6 +34,8 @@ export default function SeedPhrase() {
   const [isPrivateKey, setIsPrivateKey] = useState(false);
   const [onPhasePassword, setonPhasePassword] = useState(false);
 
+
+  // router from next router  
   const router = useRouter();
 
   //extract nessecary elements from the useform

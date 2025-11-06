@@ -32,6 +32,7 @@ export class walletFunction {
     return { privateKey, publicKey };
   }
 
+  //generate public key from privateKey
   async generatePublickeyfromPrivatekey() {
     //bring the decryption function
     const data = await this.decryptData();
@@ -59,6 +60,7 @@ export class walletFunction {
     // console.log(JSON.stringify(accountInfo, null, 2));
   }
 
+  //function to airdop sol in the wallet
   async airdropSol() {}
 
   //function to derive encryption key , an implemenation of the symmetric encryption
@@ -87,7 +89,7 @@ export class walletFunction {
       keyMaterial,
       { name: "AES-GCM", length: 256 },
       false,
-      ["encrypt", "decrypt"]
+      ["encrypt", "decrypt"] 
     );
 
     //return the value
@@ -128,7 +130,7 @@ export class walletFunction {
     }
   }
 
-  //function to decrypt data
+  //function to decrypt data c
   async decryptData() {
     //bring the obj from the localstorage
     const { cipher, salt, iv } = JSON.parse(
