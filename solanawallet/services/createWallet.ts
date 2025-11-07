@@ -18,6 +18,7 @@ export class walletFunction {
     return mphrase;
   }
 
+  //function to create seedPhrase 
   private async createSeedPhrase(mphrase: string) {
     const seedPhrase = await bip39.mnemonicToSeedWebcrypto(mphrase);
     const Uint32seedPhrase = new Uint8Array(seedPhrase);
