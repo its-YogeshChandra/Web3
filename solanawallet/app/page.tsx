@@ -7,5 +7,6 @@ export default function Home() {
     <p className="text-white text-5xl ">WELCOME TO SOLANA WALLET</p> 
     <Button className="p-4">Create Wallet</Button>
     </div>
+
   );
 }
