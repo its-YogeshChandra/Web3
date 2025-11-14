@@ -101,14 +101,14 @@ export default function() {
 
       {
         isSending == true ? <div className="w-xl h-max p-1 bg-white flex ">
-          <input id="senderAddress" type="text" value={senderAddress} onChange={(e) => setSenderAddress((e.target.value))} className="w-full h-full " />
+          <input id="senderAddress" type="text" value={senderAddress}
+            onChange={(e) => setSenderAddress((e.target.value))} className="w-full h-full " />
 
           <Button onClick={() => {
             sendSol(senderAddress)
           }}> send</Button>
         </div> : null
       }
-
       <div className="w-xl h-max bg-red-300 p-4 flex gap-x-6 ">
         <Image src={solanapng} alt="" className="w-8 h-8" />
         <p className="text-white mt-1">
