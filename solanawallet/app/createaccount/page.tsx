@@ -46,7 +46,7 @@ export default function SeedPhrase() {
   } = useForm<Inputs>();
 
   let passwordData = { password: "" };
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
     passwordData.password = data.password;
 
     //set in localStorage for testing purpose

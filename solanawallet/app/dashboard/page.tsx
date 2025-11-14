@@ -5,12 +5,12 @@ import Image from "next/image";
 import { Copy, Divide } from "lucide-react";
 import { TextAlignJustify } from "lucide-react";
 import { useEffect, useState } from "react";
-import { X } from "lucide-react";
-import { CirclePlus } from "lucide-react";
+import { X } from "lucide-react"; import { CirclePlus } from "lucide-react";
 import { walletServices } from "@/services/createWallet";
+import { base58 } from "@scure/base";
 
 // bg-[#051715]
-export default function () {
+export default function() {
   const [sideBarOpen, setSidebarOpen] = useState(false);
   const [publicKey, setPublicKey] = useState("");
   const setSideBarState = () => {
@@ -22,13 +22,22 @@ export default function () {
     const fetcherFunction = async () => {
       const data = await walletServices.generatePublickeyfromPrivatekey();
       if (data) {
-        setPublicKey(data);
+        const value = data.toBase58()
+        setPublicKey(value);
       }
     };
     fetcherFunction();
   }, []);
 
+
+  //function to airdrop sol
+  const airdropSol = async () => {
+    await walletServices.airdropSol();
+    alert("airdrop successfull")
+  }
+
   return (
+
     <div className="w-screen h-screen bg-[#051715] flex flex-col gap-y-2 items-center  p-24 relative ">
       {sideBarOpen == true ? (
         <button
@@ -60,7 +69,11 @@ export default function () {
       <div className="w-xl h-max p-1 flex justify-center gap-x-2">
         <Button>Send</Button>
         <Button>Receive</Button>
-        <Button>Airdrop Sol</Button>
+        <Button onClick={
+          () => {
+            airdropSol()
+          }
+        } >Airdrop Sol</Button>
       </div>
       <div className="w-xl h-max bg-red-300 p-4 flex gap-x-6 ">
         <Image src={solanapng} alt="" className="w-8 h-8" />

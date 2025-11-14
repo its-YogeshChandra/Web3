@@ -1,4 +1,4 @@
-import { PublicKey, Keypair, Connection } from "@solana/web3.js";
+import { PublicKey, Keypair, Connection, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import * as bip39 from "@scure/bip39";
 import { wordlist } from "@scure/bip39/wordlists/english.js";
 import { base58 } from "@scure/base";
@@ -38,7 +38,7 @@ export class walletFunction {
     //bring the decryption function
     const data = await this.decryptData();
     const keyPair = Keypair.fromSecretKey(data);
-    const publicKey = keyPair.publicKey.toBase58();
+    const publicKey = keyPair.publicKey;
     return publicKey;
   }
 
@@ -53,8 +53,7 @@ export class walletFunction {
   async walletBalance(phrase: string) {
     //create connection and query the node for account information
     const connection = new Connection(
-      process.env.NEXT_PUBLIC_DEVNET_URL ||
-        "https://solana-devnet.g.alchemy.com/v2/E4GYCRN489SZHhZeEHdSE"
+      "https://solana-devnet.g.alchemy.com/v2/E4GYCRN489SZHhZeEHdSE"
     );
 
     // const accountInfo = await connection.getAccountInfo();
@@ -62,7 +61,29 @@ export class walletFunction {
   }
 
   //function to airdop sol in the wallet
-  async airdropSol() {}
+  async airdropSol() {
+    //call the airdrop sol button
+    try {
+      const publickey = await this.generatePublickeyfromPrivatekey()
+
+      const airdropSignature = await this.connection.requestAirdrop(publickey, LAMPORTS_PER_SOL)
+
+      if (airdropSignature) {
+        return {
+          success: true
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+
+
+  //function to fetch balance 
+  async fetchBalance() {
+    //fetch data 
+  }
 
   //function to derive encryption key , an implemenation of the symmetric encryption
   private async deriveencryptionKey(password: string, salt: Uint8Array) {
@@ -90,7 +111,7 @@ export class walletFunction {
       keyMaterial,
       { name: "AES-GCM", length: 256 },
       false,
-      ["encrypt", "decrypt"] 
+      ["encrypt", "decrypt"]
     );
 
     //return the value
@@ -149,7 +170,7 @@ export class walletFunction {
 
     //create the derive key using the password
     const derivedKey = await this.deriveencryptionKey(password, salt);
-"https://solana-devnet.g.alchemy.com/v2/E4GYCRN489SZHhZeEHdSE"
+    //"https://solana-devnet.g.alchemy.com/v2/E4GYCRN489SZHhZeEHdSE"
 
     //decrypt the daata using the derived key
     const decryptedBuffer = await crypto.subtle.decrypt(
@@ -168,8 +189,7 @@ export class walletFunction {
 }
 
 const walletServices = new walletFunction(
-  process.env.NEXT_PUBLIC_DEVNET_URL ||
-    "https://solana-devnet.g.alchemy.com/v2/E4GYCRN489SZHhZeEHdSE"
+  "https://api.devnet.solana.com"
 );
 
 export { walletServices };
