@@ -16,7 +16,9 @@ export default function() {
   const setSideBarState = () => {
     setSidebarOpen((prev) => !prev);
   };
-
+  const [solBalance, setSolBalance] = useState(100)
+  const [isSending, setisSending] = useState(false)
+  const [senderAddress, setSenderAddress] = useState("");
   //fetch the public key
   useEffect(() => {
     const fetcherFunction = async () => {
@@ -29,11 +31,30 @@ export default function() {
     fetcherFunction();
   }, []);
 
+  //fetch the solana balance 
+  useEffect(() => {
+    const fetcherFunction = async () => {
+      const data = await walletServices.fetchBalance();
+      if (data) {
+        setSolBalance(data)
+      }
+    };
+    fetcherFunction();
+  }, []);
 
   //function to airdrop sol
   const airdropSol = async () => {
     await walletServices.airdropSol();
     alert("airdrop successfull")
+  }
+
+  //function  to send sol
+  const sendSol = async (key: string) => {
+    console.log(key)
+    const sendsol = await walletServices.sendTransaction(key);
+    if (sendsol == "success") {
+      alert("successfully send")
+    }
   }
 
   return (
@@ -63,11 +84,13 @@ export default function() {
       ) : null}
       <p className="text-6xl text-white mb-5">Account 1</p>
       <div className="w-xl h-[100px] bg-yellow-300 flex flex-col justify-center items-center">
-        <p className="text-6xl">100</p>
+        <p className="text-6xl"> {solBalance} </p>
         <p className="text-4xl">SOL</p>
       </div>
       <div className="w-xl h-max p-1 flex justify-center gap-x-2">
-        <Button>Send</Button>
+        <Button onClick={() => {
+          setisSending(prev => !prev)
+        }}>Send</Button>
         <Button>Receive</Button>
         <Button onClick={
           () => {
@@ -75,6 +98,17 @@ export default function() {
           }
         } >Airdrop Sol</Button>
       </div>
+
+      {
+        isSending == true ? <div className="w-xl h-max p-1 bg-white flex ">
+          <input id="senderAddress" type="text" value={senderAddress} onChange={(e) => setSenderAddress((e.target.value))} className="w-full h-full " />
+
+          <Button onClick={() => {
+            sendSol(senderAddress)
+          }}> send</Button>
+        </div> : null
+      }
+
       <div className="w-xl h-max bg-red-300 p-4 flex gap-x-6 ">
         <Image src={solanapng} alt="" className="w-8 h-8" />
         <p className="text-white mt-1">

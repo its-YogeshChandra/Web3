@@ -1,4 +1,4 @@
-import { PublicKey, Keypair, Connection, LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { PublicKey, Keypair, Connection, LAMPORTS_PER_SOL, SystemProgram, Transaction } from "@solana/web3.js";
 import * as bip39 from "@scure/bip39";
 import { wordlist } from "@scure/bip39/wordlists/english.js";
 import { base58 } from "@scure/base";
@@ -65,9 +65,7 @@ export class walletFunction {
     //call the airdrop sol button
     try {
       const publickey = await this.generatePublickeyfromPrivatekey()
-
       const airdropSignature = await this.connection.requestAirdrop(publickey, LAMPORTS_PER_SOL)
-
       if (airdropSignature) {
         return {
           success: true
@@ -76,13 +74,57 @@ export class walletFunction {
     } catch (error) {
       console.log(error)
     }
-
   }
 
 
   //function to fetch balance 
   async fetchBalance() {
-    //fetch data 
+    //fetch sol balance from devnet
+    try {
+      const publickey = await this.generatePublickeyfromPrivatekey()
+      const balance = await this.connection.getBalance(publickey)
+      return balance / 1000000000
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  //function to send transaction 
+  async sendTransaction(receiverPublicKey: string) {
+    //getting blockhash
+    try {
+      const { blockhash, lastValidBlockHeight } = await this.connection.getLatestBlockhash();
+
+      // fetch the public key 
+      const publickey = await this.generatePublickeyfromPrivatekey();
+      const receiverkey = new PublicKey(receiverPublicKey);
+      //create transfer instruction 
+      const transferInstruction = SystemProgram.transfer({
+        fromPubkey: publickey,
+        toPubkey: receiverkey,
+        lamports: 0.1 * LAMPORTS_PER_SOL
+      })
+
+      //signing the transaction 
+      const transaction = new Transaction({
+        blockhash,
+        lastValidBlockHeight,
+        feePayer: publickey
+      }).add(transferInstruction);
+
+      //get the keypair from private key 
+      const privatekey = await this.decryptData()
+      const keyPair = Keypair.fromSecretKey(privatekey)
+
+      const signature = await this.connection.sendTransaction(transaction, [keyPair]);
+
+      if (signature)
+        return "success"
+
+    } catch (error) {
+      console.log(error)
+      return error
+    }
   }
 
   //function to derive encryption key , an implemenation of the symmetric encryption
