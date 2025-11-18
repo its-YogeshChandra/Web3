@@ -12,7 +12,7 @@ export default function Hero() {
               <br />
               <span className="text-slate-900">on Solana</span>
             </h1>
-            <div className="w-12 sm:w-16 h-1 bg-gradient-to-r from-cyan-400 to-cyan-500 mt-6 rounded-full mx-auto lg:mx-0 transition-all duration-300 hover:w-24 hover:shadow-lg"></div>
+            <div className="w-12 sm:w-16 h-1 bg-linear-to-r from-cyan-400 to-cyan-500 mt-6 rounded-full mx-auto lg:mx-0 transition-all duration-300 hover:w-24 hover:shadow-lg"></div>
           </div>
 
           <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
@@ -21,9 +21,9 @@ export default function Hero() {
 
           <div className="flex flex-col sm:flex-row items-center gap-4 pt-4 justify-center lg:justify-start">
             <button
-              className="w-full sm:w-auto bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-500 hover:to-cyan-600 text-white rounded-full px-6 sm:px-8 py-6 font-semibold flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg hover:scale-105"
+              className="w-full sm:w-auto bg-linear-to-r from-cyan-400 to-cyan-500 hover:from-cyan-500 hover:to-cyan-600 text-white rounded-full px-6 sm:px-8 py-6 font-semibold flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg hover:scale-105"
             >
-              WHITE PAPER <span>→</span>
+              Let's Start<span>→</span>
             </button>
             <button
               className="rounded-full border border-slate-300 text-white hover:bg-white px-6 py-6 transition-all duration-300 hover:scale-110 hover:shadow-md flex items-center justify-center"
@@ -38,7 +38,7 @@ export default function Hero() {
         <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
           <div className="relative w-full max-w-md h-64 md:h-80 lg:h-96 transition-transform duration-300 hover:scale-105">
             <img
-              src="../../../public/landingtoken.png"
+              src="../../../landingtoken.png"
               alt="Cyber Protection Blockchain Illustration"
               className="w-full h-full object-cover rounded-2xl transition-all duration-300 hover:shadow-cyan-500/50"
             />

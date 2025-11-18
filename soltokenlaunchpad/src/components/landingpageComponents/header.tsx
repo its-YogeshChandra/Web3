@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 
 export default function Header() {
-  const navItems = ['Overview', 'About STMX', 'How It Works', 'Crypto Calculator', 'Token', 'Roadmap', 'Team']
+  const navItems = ['Overview', 'About Us', 'How It Works', 'Crypto Calculator', 'Token', 'Roadmap', 'Team']
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -26,8 +26,8 @@ export default function Header() {
           {navItems.map((item) => (
             <a
               key={item}
-              href="#"
-              className="text-sm font-medium text-slate-700 hover:text-slate-900 transition-all duration-300 hover:scale-105"
+              //className="text-sm font-medium text-red-500 hover:text-[#96b1ac] transition-all duration-300 hover:scale-105"
+              className=' bg-white text-red-500 '
             >
               {item}
             </a>
@@ -54,22 +54,24 @@ export default function Header() {
       </div>
 
       {/* Mobile Navigation */}
-      {isOpen && (
-        <nav className="lg:hidden bg-white border-t border-slate-100 shadow-lg animate-in fade-in slide-in-from-top-2 duration-200">
-          <div className="flex flex-col px-4 py-4 space-y-2">
-            {navItems.map((item) => (
-              <a
-                key={item}
-                href="#"
-                onClick={() => setIsOpen(false)}
-                className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-all duration-300 hover:translate-x-1"
-              >
-                {item}
-              </a>
-            ))}
-          </div>
-        </nav>
-      )}
-    </header>
+      {
+        isOpen && (
+          <nav className="lg:hidden bg-white border-t border-slate-100 shadow-lg animate-in fade-in slide-in-from-top-2 duration-200">
+            <div className="flex flex-col px-4 py-4 space-y-2">
+              {navItems.map((item) => (
+                <a
+                  key={item}
+                  href="#"
+                  onClick={() => setIsOpen(false)}
+                  className="px-4 py-2 text-sm font-medium text-[#96b1ac] hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-all duration-300 hover:translate-x-1"
+                >
+                  {item}
+                </a>
+              ))}
+            </div>
+          </nav>
+        )
+      }
+    </header >
   )
 }
