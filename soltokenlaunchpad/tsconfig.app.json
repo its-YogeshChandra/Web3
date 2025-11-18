@@ -25,7 +25,7 @@
     "noUncheckedSideEffectImports": true,
    
     /* shadcn */ 
-    "basUrl": ".",
+    "baseUrl": ".",
     "paths": {
       "@/*" : ["./src/*"]
     }

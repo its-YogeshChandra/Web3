@@ -15,9 +15,7 @@ function App() {
       <ConnectionProvider endpoint={"https://api.devnet.solana.com"}>
         <WalletProvider wallets={[]} autoConnect>
           <WalletModalProvider>
-            <div style={{
-              padding: 20
-            }}>
+            <div className='w-screen h-screen'>
               <Outlet />
               <Toaster
                 position="bottom-left"
