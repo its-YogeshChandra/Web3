@@ -2,6 +2,8 @@ import { createBrowserRouter } from "react-router";
 import App from "../App.tsx";
 import LandingPage from "../pages/landingPage.tsx";
 import CreatePage from "../pages/createPage.tsx";
+import CreateToken from "../pages/createToken.tsx";
+
 
 const Routing = createBrowserRouter([
   {
@@ -15,7 +17,11 @@ const Routing = createBrowserRouter([
       {
         path: "createtoken",
         Component: CreatePage,
-      }
+      },
+      {
+        path: "calltoken",
+        Component: CreateToken,
+      },
     ]
   }
 
