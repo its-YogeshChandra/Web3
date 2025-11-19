@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import FormField from './formfield'
-import Tooltip from './Tooltip'
+import Tooltip from './tooltip'
 
 interface FormData {
   name: string
@@ -228,7 +228,7 @@ export default function TokenForm({
         <button
           type="button"
           onClick={() => setExpandAuthority(!expandAuthority)}
-          className="flex items-center gap-2 font-semibold text-lg hover:text-primary transition-colors"
+          className="flex items-center gap-2 text-white font-semibold text-lg hover:text-primary transition-colors"
         >
           <ChevronDown
             size={20}
@@ -273,7 +273,7 @@ export default function TokenForm({
         <button
           type="button"
           onClick={() => setExpandSocial(!expandSocial)}
-          className="flex items-center gap-2 font-semibold text-lg hover:text-primary transition-colors"
+          className="flex items-center gap-2 text-white font-semibold text-lg hover:text-primary transition-colors"
         >
           <ChevronDown
             size={20}

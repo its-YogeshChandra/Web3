@@ -23,15 +23,15 @@ export default function TokenLaunchpad() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { addToast } = useToast()
 
-  const handleConnect = () => {
-    setIsConnected(true)
-    addToast('Wallet connected successfully!', 'success')
-  }
-
-  const handleDisconnect = () => {
-    setIsConnected(false)
-    addToast('Wallet disconnected', 'info')
-  }
+  // const handleConnect = () => {
+  //   setIsConnected(true)
+  //   addToast('Wallet connected successfully!', 'success')
+  // }
+  //
+  // const handleDisconnect = () => {
+  //   setIsConnected(false)
+  //   addToast('Wallet disconnected', 'info')
+  // }
 
   const handleFormChange = (data: typeof formData) => {
     setFormData(data)
@@ -73,9 +73,6 @@ export default function TokenLaunchpad() {
   return (
     <div className="space-y-6">
       <WalletConnect
-        isConnected={isConnected}
-        onConnect={handleConnect}
-        onDisconnect={handleDisconnect}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
