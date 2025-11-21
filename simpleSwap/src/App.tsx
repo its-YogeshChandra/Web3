@@ -1,14 +1,11 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 
 function App() {
 
   return (
     <>
       <div className='w-screen h-screen bg-slate-800 flex flex-col items-center justify-center ' >
-        <div className='w-[570px] h-[420px] bg-[#680747] p-2 flex flex-col gap-y-3 '>
-          <div className='w-full h-[49%] bg-fuchsia-400 p-2 flex flex-col items-center justify-center'>
+        <div className='w-[570px] h-[420px] backdrop-blur-2xl bg-white/20 p-2 flex flex-col gap-y-3 '>
+          <div className='w-full h-[49%]  flex flex-col items-center justify-center'>
             <div className='w-full h-max flex justify-between px-8  '>
               <p className='text-3xl'>From</p>
               <p className='text-xl'>Balance</p>

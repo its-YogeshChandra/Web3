@@ -14,7 +14,10 @@ export class swapfunctions {
     this.keyPair = this.generateKeyPair(privateKey)
     this.connection = new Connection(devnetUrl)
   }
-
+  async keychecker() {
+    const data = this.keyPair
+    return data
+  }
 }
 
 const swapServices = new swapfunctions();
