@@ -12,7 +12,7 @@ import {
 } from '@solana/wallet-adapter-wallets';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import { Outlet } from "react-router";
-
+import '@solana/wallet-adapter-react-ui/styles.css'
 
 function Layout() {
 
@@ -22,11 +22,6 @@ function Layout() {
     //return the error
     console.log(error);
   }
-
-  // const wallets = useMemo(
-  //   () => [new PhantomWalletAdapter(),
-  //   new LedgerWalletAdapter()], [network]
-  // )
   const endpoint = import.meta.env.VITE_DEVNET_URL
   return (<div>
     <ConnectionProvider endpoint={endpoint}>
