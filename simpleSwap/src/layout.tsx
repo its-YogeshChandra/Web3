@@ -3,7 +3,7 @@ import {
   ConnectionProvider,
   WalletProvider
 } from '@solana/wallet-adapter-react';
-import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
+import { WalletDisconnectButton, WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import {
   PhantomWalletAdapter,
   SolflareWalletAdapter,
@@ -16,21 +16,21 @@ import { Outlet } from "react-router";
 
 function Layout() {
 
-  const network = WalletAdapterNetwork.Devnet;
+  //  const network = WalletAdapterNetwork.Devnet;
 
   const errorHandler = (error: Error) => {
     //return the error
     console.log(error);
   }
 
-  const wallets = useMemo(
-    () => [new PhantomWalletAdapter(),
-    new LedgerWalletAdapter()], [network]
-  )
-  const endpoint = import.meta.env.DEVNET_URL
-  return (
+  // const wallets = useMemo(
+  //   () => [new PhantomWalletAdapter(),
+  //   new LedgerWalletAdapter()], [network]
+  // )
+  const endpoint = import.meta.env.VITE_DEVNET_URL
+  return (<div>
     <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={wallets} autoConnect onError={errorHandler}>
+      <WalletProvider wallets={[]} autoConnect onError={errorHandler}>
         <WalletModalProvider>
           <div className="w-screen h-screen">
             <Outlet />
@@ -38,7 +38,7 @@ function Layout() {
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider >
-  )
+  </div>)
 }
 
 export default Layout
