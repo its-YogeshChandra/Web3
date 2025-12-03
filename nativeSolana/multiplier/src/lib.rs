@@ -52,6 +52,8 @@ pub fn multiplier_function(
             data.result = (value[0] * value[1]) as i32;
         }
     }
+
+    //
     data.serialize(&mut *acc.data.borrow_mut())
         .expect("error while serealizing the data ");
 
