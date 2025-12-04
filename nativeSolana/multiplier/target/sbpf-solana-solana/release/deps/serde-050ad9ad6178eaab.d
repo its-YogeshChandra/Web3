@@ -1,0 +1,14 @@
+/Users/test/Documents/web3/nativeSolana/multiplier/target/sbpf-solana-solana/release/deps/libserde-050ad9ad6178eaab.rmeta: /Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/lib.rs /Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/integer128.rs /Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/mod.rs /Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/de.rs /Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/ser.rs /Users/test/Documents/web3/nativeSolana/multiplier/target/sbpf-solana-solana/release/build/serde-3f80ffc467efe792/out/private.rs
+
+/Users/test/Documents/web3/nativeSolana/multiplier/target/sbpf-solana-solana/release/deps/libserde-050ad9ad6178eaab.rlib: /Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/lib.rs /Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/integer128.rs /Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/mod.rs /Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/de.rs /Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/ser.rs /Users/test/Documents/web3/nativeSolana/multiplier/target/sbpf-solana-solana/release/build/serde-3f80ffc467efe792/out/private.rs
+
+/Users/test/Documents/web3/nativeSolana/multiplier/target/sbpf-solana-solana/release/deps/serde-050ad9ad6178eaab.d: /Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/lib.rs /Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/integer128.rs /Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/mod.rs /Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/de.rs /Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/ser.rs /Users/test/Documents/web3/nativeSolana/multiplier/target/sbpf-solana-solana/release/build/serde-3f80ffc467efe792/out/private.rs
+
+/Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/lib.rs:
+/Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/integer128.rs:
+/Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/mod.rs:
+/Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/de.rs:
+/Users/test/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/ser.rs:
+/Users/test/Documents/web3/nativeSolana/multiplier/target/sbpf-solana-solana/release/build/serde-3f80ffc467efe792/out/private.rs:
+
+# env-dep:OUT_DIR=/Users/test/Documents/web3/nativeSolana/multiplier/target/sbpf-solana-solana/release/build/serde-3f80ffc467efe792/out
