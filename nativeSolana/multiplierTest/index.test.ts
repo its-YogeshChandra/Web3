@@ -1,5 +1,5 @@
 import * as borsh from "borsh";
-import { Connection, Keypair, PublicKey, sendAndConfirmRawTransaction, sendAndConfirmTransaction, SystemProgram, Transaction } from "@solana/web3.js";
+import { Connection, Keypair, PublicKey, sendAndConfirmRawTransaction, sendAndConfirmTransaction, SystemProgram, Transaction, TransactionInstruction } from "@solana/web3.js";
 import { expect, test } from "bun:test"
 
 class MultiplierAccount {
@@ -26,11 +26,13 @@ const multipliersize = borsh.serialize(schema, new MultiplierAccount({ input: [4
 let multiplierAccountKeypair: Keypair;
 let adminKeyPair: Keypair;
 
+const connection = new Connection('http://127.0.0.1:8899')
+
 test("multiplication is working", async () => {
   adminKeyPair = Keypair.generate();
   multiplierAccountKeypair = Keypair.generate()
 
-  const connection = new Connection('http://127.0.0.1:8899')
+
   const latestBlockhash = await connection.getLatestBlockhash();
   console.log(await connection.getAccountInfo(adminKeyPair.publicKey));
 
@@ -58,5 +60,16 @@ test("multiplication is working", async () => {
   const txhash = await sendAndConfirmTransaction(connection, transaction, [adminKeyPair, multiplierAccountKeypair]);
   console.log("transaction signature : " + txhash)
 })
+test("multiplier working correctly", async () => {
+  const tx = new Transaction();
+  tx.add(new TransactionInstruction({
+    keys:[{
+      pubkey: multiplierAccountKeypair.publicKey,
+      isSigner: true,
+      isWritable: true,
 
+    }]
 
+  }))
+
+})
