@@ -1,7 +1,8 @@
 import * as borsh from "borsh";
-import { Connection, Keypair, PublicKey, sendAndConfirmRawTransaction, sendAndConfirmTransaction, SystemProgram, Transaction, TransactionInstruction } from "@solana/web3.js";
-import { expect, test } from "bun:test"
+import { Connection, Keypair, PublicKey, sendAndConfirmTransaction, SystemProgram, Transaction, TransactionInstruction } from "@solana/web3.js";
+import { expect, jest, test } from "bun:test"
 
+//schema for the accoun type
 class MultiplierAccount {
   input: [number, number];
   result: number;
@@ -13,15 +14,37 @@ class MultiplierAccount {
 
 }
 
-
 const schema: borsh.Schema = {
   struct: {
-    'input': { array: { type: 'i32' } },
+    'input': { array: { type: 'i32', len: 2 } },
     'result': 'i32'
   }
 }
 
-const multipliersize = borsh.serialize(schema, new MultiplierAccount({ input: [4, 9] }, { result: 0 })).length;
+const multipliersize = borsh.serialize(schema, new MultiplierAccount({ input: [0, 0] }, { result: 0 })).length;
+
+
+//schmea for insturction 
+class Number {
+  value: Uint8Array;
+  constructor({ value }: { value: Uint8Array }) {
+    this.value = value;
+  }
+}
+
+//corresponding enum schema for Instruction
+const instructionSchema: borsh.Schema = {
+  enum: [{
+    struct: {
+      value: {
+        array: { type: "u8", len: 2 }
+      }
+    }
+  }]
+}
+
+
+
 
 let multiplierAccountKeypair: Keypair;
 let adminKeyPair: Keypair;
@@ -59,17 +82,50 @@ test("multiplication is working", async () => {
 
   const txhash = await sendAndConfirmTransaction(connection, transaction, [adminKeyPair, multiplierAccountKeypair]);
   console.log("transaction signature : " + txhash)
+
+  //crate the account data and ensure it's empty 
+  const multiplieraccountinfo = await connection.getAccountInfo(multiplierAccountKeypair.publicKey);
+  if (!multiplieraccountinfo || multiplieraccountinfo == undefined) {
+    throw new Error("account not found")
+  }
+
+  const mult = borsh.deserialize(schema, multiplieraccountinfo.data);
+  console.log(mult);
 })
-test("multiplier working correctly", async () => {
+
+
+test("multiplication happens", async () => {
+
+  // test for the multiplier 
   const tx = new Transaction();
+  const programid = new PublicKey("F2YrQcv6mXP46GYBrdJmZr82mHZdo36dnqbWRfCCMcT8");
+
+  const insturctionData = Buffer.from(
+    borsh.serialize(instructionSchema, new Number({ value: new Uint8Array([4, 9]) }))
+  )
   tx.add(new TransactionInstruction({
-    keys:[{
+    keys: [{
       pubkey: multiplierAccountKeypair.publicKey,
-      isSigner: true,
+      isSigner: false,
       isWritable: true,
-
-    }]
-
+    }],
+    programId: programid,
+    data: insturctionData
   }))
 
+  //send and confirm the tranasaction 
+  const txhash = await sendAndConfirmTransaction(connection, tx, [adminKeyPair]);
+  if (!txhash) {
+    throw new Error("multiplier not working fine");
+  }
+  console.log("transaction hash :" + txhash);
+
+  //fetch the account info from the blockchain
+  const multaccountinfo = await connection.getAccountInfo(multiplierAccountKeypair.publicKey);
+  if (!multaccountinfo) {
+    throw new Error("account not found")
+  };
+
+  const mult = borsh.deserialize(schema, multaccountinfo.data,) as MultiplierAccount;
+  console.log(mult);
 })
